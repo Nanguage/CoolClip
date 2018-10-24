@@ -1,4 +1,5 @@
 #!/usr/bin/env bash
+set -e
 
 # test case 1
 # 
@@ -21,9 +22,11 @@ fi
 
 python coolclip.py $test_data $out_cool $clip_regions
 
+h5cat $out_cool
 cooler info $out_cool
 
 for region in $clip_regions;
 do
+    echo dump $region
     cooler dump $out_cool -r $region
 done
