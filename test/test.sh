@@ -6,27 +6,30 @@ set -e
 
 test_data="test/data/K562_MbolI_5kb.cool"
 
-if [ ! -f $test_data ]; then
+if [ ! -f ${test_data} ]; then
     download_url="ftp://cooler.csail.mit.edu/coolers/hg19/Rao2014-K562-MboI-allreps-filtered.5kb.cool"
-    wget $download_url -O $test_data
+    wget ${download_url} -O ${test_data}
 fi
 
 out_cool="test/data/test1.cool"
-clip_regions="chr1:100000-200000 chr2:300000-400000"
+clip_regions="chr1:900000-1000000 chr2:300000-400000"
 
-echo $test_data $out_cool $clip_regions
-if [ -f $out_cool ]; then
+echo ${test_data} ${out_cool} ${clip_regions}
+if [ -f ${out_cool} ]; then
     echo delete old file $out_cool
-    rm $out_cool
+    rm ${out_cool}
 fi
 
-python coolclip.py $test_data $out_cool $clip_regions
+python coolclip.py ${test_data} ${out_cool} ${clip_regions}
 
-h5cat $out_cool
-cooler info $out_cool
+#h5cat $out_cool
+cooler info ${out_cool}
 
-for region in $clip_regions;
+for region in ${clip_regions};
 do
-    echo dump $region
-    cooler dump $out_cool -r $region
+    echo dump ${region}
+    original_counts=$(cooler dump ${test_data} -r ${region} | wc -l)
+    counts=$(cooler dump ${out_cool} -r ${region} | wc -l)
+    echo ${original_counts} ${counts}
+    [[ ${counts} == ${original_counts} ]] && true || false
 done
