@@ -51,8 +51,8 @@ def get_install_requires():
 
 setup(
     name='coolclip',
-    author='Weize Xu',
-    author_email='vet.xwz@gmail.com',
+    author='nanguage',
+    author_email='nanguage@yahoo.com',
     version=get_version(),
     license='GPLv3',
     description='A small tool for clip the cooler file',
