@@ -20,7 +20,7 @@ if [ -f ${out_cool} ]; then
     rm ${out_cool}
 fi
 
-python coolclip.py ${test_data} ${out_cool} ${clip_regions}
+python -m coolclip ${test_data} ${out_cool} ${clip_regions}
 
 #h5cat $out_cool
 cooler info ${out_cool}
